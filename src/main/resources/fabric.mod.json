@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "vie_cheats",
+  "version": "1.0.0",
+  "name": "Vie Client FUCK BITCH (Deobf bởi Herlys Team)",
+  "description": "(VIE CLIENT) FUCK BITCH — Deobfuscated & Purified Vie Cheats / Vie Client by HERLYS TEAM. Discord: https://dsc.gg/herlysaddon",
+  "authors": ["Drake"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/vie_cheats/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["me.drake.viecheats.VieCheatsMod"]
+  },
+  "mixins": ["mixins.vie_cheats.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": ">=1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
