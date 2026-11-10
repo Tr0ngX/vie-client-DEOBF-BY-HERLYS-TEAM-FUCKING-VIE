@@ -1,8 +1,11 @@
 package me.drake.viecheats.mixin;
 
-import net.minecraft.world.chunk.light.LightingProvider;
+import net.minecraft.class_3568;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(LightingProvider.class)
+@Mixin(class_3568.class)
 public class MixinLightingProvider {
+    public MixinLightingProvider() {
+    }
+
 }

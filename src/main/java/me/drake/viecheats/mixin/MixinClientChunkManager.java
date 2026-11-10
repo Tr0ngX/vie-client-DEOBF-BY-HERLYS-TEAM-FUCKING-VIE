@@ -1,25 +1,36 @@
 package me.drake.viecheats.mixin;
 
+import java.util.Map;
+import java.util.function.Consumer;
 import me.drake.viecheats.VieCheatsMod;
-import me.drake.viecheats.events.world.ChunkDataEvent;
-import net.minecraft.client.world.ClientChunkManager;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.ChunkData;
-import net.minecraft.world.chunk.WorldChunk;
+import me.drake.viecheats.core.event.events.ChunkLoadEvent;
+import net.minecraft.class_1923;
+import net.minecraft.class_2540;
+import net.minecraft.class_631;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import java.util.function.Consumer;
 
-@Mixin(ClientChunkManager.class)
+@Mixin(class_631.class)
 public class MixinClientChunkManager {
-    @Inject(method = "loadChunkFromPacket", at = @At("RETURN"))
-    private void onLoadChunkFromPacket(int x, int z, PacketByteBuf buf, NbtCompound nbt, Consumer<ChunkData.BlockEntityVisitor> consumer, CallbackInfoReturnable<WorldChunk> cir) {
-        WorldChunk chunk = cir.getReturnValue();
-        if (chunk != null) {
-            VieCheatsMod.EVENT_BUS.post(ChunkDataEvent.get(chunk));
+    @Inject(method = "method_16020(IILnet/minecraft/class_2540;Ljava/util/Map;Ljava/util/function/Consumer;)Lnet/minecraft/class_2818;", at = @At("RETURN"))
+    private void onChunkLoad(int x, int z, class_2540 buf, Map heightmaps, Consumer consumer, CallbackInfoReturnable cir) {
+        VieCheatsMod instance = VieCheatsMod.getInstance();
+        if ((instance == null) || (instance.getEventBus() == null)) {
+            return;
         }
+        instance.getEventBus().post(new ChunkLoadEvent(new class_1923(x, z), true));
     }
+
+    @Inject(method = "method_2859(Lnet/minecraft/class_1923;)V", at = @At("HEAD"))
+    private void onChunkUnload(class_1923 pos, CallbackInfo ci) {
+        VieCheatsMod instance = VieCheatsMod.getInstance();
+        if ((instance == null) || (instance.getEventBus() == null)) {
+            return;
+        }
+        instance.getEventBus().post(new ChunkLoadEvent(pos, false));
+    }
+
 }

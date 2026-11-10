@@ -1,22 +1,42 @@
 package me.drake.viecheats.mixin;
 
-import me.drake.viecheats.modules.Modules;
-import me.drake.viecheats.modules.misc.FakeStats;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.PlayerListHud;
-import net.minecraft.client.network.PlayerListEntry;
+import me.drake.viecheats.modules.client.FakeStats;
+import me.drake.viecheats.modules.client.NameProtect;
+import net.minecraft.class_2561;
+import net.minecraft.class_355;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(PlayerListHud.class)
+@Mixin(class_355.class)
 public class MixinPlayerListHudFakeStats {
-    @Inject(method = "renderLatencyIcon", at = @At("HEAD"), cancellable = true)
-    private void onRenderLatencyIcon(DrawContext context, int width, int x, int y, PlayerListEntry entry, CallbackInfo ci) {
-        FakeStats fakeStats = Modules.get().get(FakeStats.class);
-        if (fakeStats != null && fakeStats.isActive() && fakeStats.spoofPing()) {
-            // Custom ping rendering handled by FakeStats module
-        }
+    @ModifyVariable(method = "method_1925(Lnet/minecraft/class_2561;)V", at = @At("HEAD"), argsOnly = true, require = 0)
+    private class_2561 onRewriteHeader(class_2561 text) {
+        class_2561 processed = NameProtect.staticReplaceText(text);
+        if (!(FakeStats.isSurfaceActive(FakeStats.Surface.TABLIST))) return processed;
+        return FakeStats.rewriteText(processed, FakeStats.Surface.TABLIST);
     }
+
+    @ModifyVariable(method = "method_1924(Lnet/minecraft/class_2561;)V", at = @At("HEAD"), argsOnly = true, require = 0)
+    private class_2561 onRewriteFooter(class_2561 text) {
+        class_2561 processed = NameProtect.staticReplaceText(text);
+        if (!(FakeStats.isSurfaceActive(FakeStats.Surface.TABLIST))) return processed;
+        return FakeStats.rewriteText(processed, FakeStats.Surface.TABLIST);
+    }
+
+    @ModifyArg(method = "method_1919(Lnet/minecraft/class_332;ILnet/minecraft/class_269;Lnet/minecraft/class_266;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_332;method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)V"), index = 1, require = 0)
+    private class_2561 onRewritePlayerName(class_2561 text) {
+        class_2561 processed = NameProtect.staticReplaceText(text);
+        if (!(FakeStats.isSurfaceActive(FakeStats.Surface.TABLIST))) return processed;
+        return FakeStats.rewriteText(processed, FakeStats.Surface.TABLIST);
+    }
+
+    @ModifyArg(method = "method_1922(Lnet/minecraft/class_266;ILnet/minecraft/class_355$class_9018;IILjava/util/UUID;Lnet/minecraft/class_332;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/class_332;method_27535(Lnet/minecraft/class_327;Lnet/minecraft/class_2561;III)V"), index = 1, require = 0)
+    private class_2561 onRewriteObjectiveScore(class_2561 text) {
+        class_2561 processed = NameProtect.staticReplaceText(text);
+        if (!(FakeStats.isSurfaceActive(FakeStats.Surface.TABLIST))) return processed;
+        return FakeStats.rewriteText(processed, FakeStats.Surface.TABLIST);
+    }
+
 }

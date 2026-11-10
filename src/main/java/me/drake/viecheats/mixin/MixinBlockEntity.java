@@ -1,8 +1,11 @@
 package me.drake.viecheats.mixin;
 
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.class_2586;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(BlockEntity.class)
+@Mixin(class_2586.class)
 public class MixinBlockEntity {
+    public MixinBlockEntity() {
+    }
+
 }

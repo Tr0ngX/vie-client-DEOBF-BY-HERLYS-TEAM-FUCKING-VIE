@@ -1,12 +1,13 @@
 package me.drake.viecheats.mixin;
 
-import net.minecraft.block.spawner.MobSpawnerEntry;
-import net.minecraft.block.spawner.MobSpawnerLogic;
+import net.minecraft.class_1917;
+import net.minecraft.class_1952;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(MobSpawnerLogic.class)
+@Mixin(class_1917.class)
 public interface MixinMobSpawnerLogicAccessor {
-    @Accessor("spawnEntry")
-    MobSpawnerEntry getSpawnEntry();
+    @Accessor("field_9155")
+    class_1952 getSpawnEntry();
+
 }
