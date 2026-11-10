@@ -1,3 +1,8 @@
+# Deobf By Herlys Team
+https://dsc.gg/herlysaddon
+
+---
+
 # 🖕 (VIE CLIENT) FUCK BITCH - DEOBF BY HERLYS TEAM 🖕
 
 > ### **HERLYS TEAM ON TOP**
